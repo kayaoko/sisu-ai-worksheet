@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Vocabulary Worksheet Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Print-friendly styles for PDF generation */
+      .print-mode, .print-mode * { /* Apply to worksheet and all children */
+        transition: none !important;
+        animation: none !important;
+      }
+      .print-mode > div { /* The main worksheet container */
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border: 1px solid #ccc !important;
+      }
+      /* Remove background colors to save ink */
+      .print-mode .bg-slate-50,
+      .print-mode .bg-slate-100,
+      .print-mode .bg-indigo-100 {
+        background-color: transparent !important;
+      }
+      /* Style for tags like 'Korean Meaning' */
+       .print-mode .bg-amber-200 {
+        background-color: transparent !important; /* Save ink */
+        color: #000 !important;
+        border: 1px solid #999 !important; /* Simple border instead of background color */
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+      /* Ensure all text is black for readability */
+      .print-mode .text-indigo-600,
+      .print-mode .text-indigo-700,
+      .print-mode .text-amber-800,
+      .print-mode .text-slate-800,
+      .print-mode .text-slate-700,
+      .print-mode .text-slate-600,
+      .print-mode .text-slate-500 {
+        color: #000 !important;
+      }
+      /* Standardize border colors to greyscale */
+      .print-mode .border-slate-200,
+      .print-mode .border-slate-900,
+      .print-mode .border-slate-400 {
+        border-color: #999 !important;
+      }
+      /* Make dashed lines for student input grey instead of red */
+      .print-mode .border-dashed {
+        border-color: #bbb !important;
+      }
+      /* Remove all rounded corners for a classic paper look */
+      .print-mode .rounded-lg,
+      .print-mode .rounded-full,
+      .print-mode .rounded-md,
+      .print-mode .rounded-xl {
+        border-radius: 0 !important;
+      }
+      /* Ensure image borders are simple and thin */
+      .print-mode .border-4 {
+          border-width: 1px !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.20.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
