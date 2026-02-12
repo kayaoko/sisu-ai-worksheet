@@ -3,7 +3,7 @@ import { ControlPanel } from './components/ControlPanel';
 import { WorksheetDisplay } from './components/WorksheetDisplay';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorMessage } from './components/ErrorMessage';
-import { generateWorksheetData, generateImageForWord } from './services/geminiService';
+import { generateWorksheetData } from './services/geminiService';
 import { Level, WorksheetData, SavedWorksheet } from './types';
 import { SavedWorksheetsPanel } from './components/SavedWorksheetsPanel';
 import { getImageFromCache, saveImageToCache } from './services/imageCache';
@@ -12,7 +12,22 @@ import { getImageFromCache, saveImageToCache } from './services/imageCache';
 declare const html2canvas: any;
 declare const jspdf: any;
 
+const fetchImageFromServer = async (word: string, level: Level) => {
+  const res = await fetch('/api/generate-image', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ word, level }),
+  });
 
+  if (!res.ok) {
+    throw new Error('Image generation failed');
+  }
+
+  const data = await res.json();
+  return data.image;
+};
 function App() {
   const [word, setWord] = useState<string>('');
   const [level, setLevel] = useState<Level>(Level.L1);
@@ -171,7 +186,9 @@ function App() {
       const dataPromise = generateWorksheetData(word, level);
       
       // Generate image only if not in cache
-      const imagePromise = cachedImage ? Promise.resolve(cachedImage) : generateImageForWord(word, level);
+      const imagePromise = cachedImage
+        ? Promise.resolve(cachedImage)
+        : fetchImageFromServer(word, level);
 
       const [data, imageData] = await Promise.all([
         dataPromise,
