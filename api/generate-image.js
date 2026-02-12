@@ -30,8 +30,8 @@ export default async function handler(req, res) {
     const image =
       response.generatedImages?.[0]?.image?.imageBytes || null;
 
-    res.status(200).json({ image });
+    return res.status(200).json({ image });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 }
